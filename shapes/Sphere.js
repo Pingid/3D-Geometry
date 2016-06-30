@@ -20,10 +20,10 @@ function Sphere(origin, radius, ctx, detail) {
       while(a.push([]) < len);
       return a;
     }
-    var points = make2dArray(this.detail)
-    for(i = 0; i < this.detail; i++) {
+    var points = make2dArray(this.detail + 1)
+    for(i = 0; i <= this.detail; i++) {
       var lon = i.map(0, this.detail, 0, (Math.PI * 2))
-      for(j = 0; j < this.detail; j++) {
+      for(j = 0; j <= this.detail; j++) {
         var lat = j.map(0, this.detail, 0, Math.PI)
         var x = this.radius * Math.cos(lon) * Math.sin(lat)
         var y = this.radius * Math.sin(lon) * Math.sin(lat)
@@ -60,18 +60,40 @@ function Sphere(origin, radius, ctx, detail) {
     this.rotate('z', this.rotation[2]);
   };
 
-  this.draw = function() {
+  this.drawPoints = function(radius) {
     this.mapPoints(function(point) {
       ctx.beginPath();
-      ctx.arc(point.x, point.y, 1, 0, 2 * Math.PI, false);
+      ctx.arc(point.x, point.y, radius, 0, 2 * Math.PI, false);
       ctx.fillStyle = 'green';
       ctx.stroke();
     });
   }
 
+  this.drawMesh = function() {
+    function drawFace(nodes) {
+      ctx.beginPath();
+      ctx.moveTo(nodes[0].x, nodes[0].y)
+      for(var i = 1; i < nodes.length; i++) {
+        ctx.lineTo(nodes[i].x, nodes[i].y)
+      }
+      ctx.lineWidth = 1;
+      ctx.strokeStyle = 'white';
+      ctx.stroke();
+    }
+    for (i = 0; i < this.points.length - 1; i ++) {
+      for (j = 0; j < this.points.length - 1 ; j ++) {
+        var p1 = this.points[i][j];
+        var p2 = this.points[i + 1][j];
+        var p3 = this.points[i][j + 1];
+        drawFace([p1, p2, p3, p1])
+      }
+    }
+  }
+
   this.update = function() {
     this.generatePoints()
     this.updateRotation()
-    this.draw()
+    this.drawPoints(2)
+    this.drawMesh(2)
   }
 }

@@ -86,8 +86,8 @@ function Cube(origin, size, context) {
       context.lineWidth = 1;
       context.strokeStyle = 'black';
       context.fillStyle = '#'+(Math.random()*0xFFFFFF<<0).toString(16);
-      context.stroke();
       context.fill();
+      context.stroke();
     }
     var faces = self.faces.map(function(face) {
       return face.map(function(node) {

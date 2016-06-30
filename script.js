@@ -16,15 +16,13 @@ ctx.translate(pageWidth / 2, pageHeight / 2);
 var currentShape = new Cube([0, 0, 0], 400, ctx);
 var rotation = [0, 0, 0];
 var run = false;
-var test = new Sphere([0, 0, 0], (pageHeight / 2) - 50, ctx, 10)
-test.update()
-console.log(test.points);
+
 // Navbar shape select
 document.getElementById('cube').onclick = function() {
   currentShape = new Cube([0, 0, 0], (pageHeight / 2) - 50, ctx);
 }
 document.getElementById('sphere').onclick = function() {
-  currentShape = new Sphere([0, 0, 0], (pageHeight / 2) - 50, ctx, 20);
+  currentShape = new Sphere([0, 0, 0], (pageHeight / 2) - 50, ctx, 30);
 }
 document.getElementById('octahedron').onclick = function() {
   currentShape = new Octahedron([0, 0, 0], (pageHeight / 2) - 50, ctx);
